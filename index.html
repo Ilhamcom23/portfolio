@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Ilham Firmansyah — Informatics Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#10243E;
+    --navy-deep:#0A1A2C;
+    --steel:#2E6F9E;
+    --gold:#B8934A;
+    --paper:#F7F8FA;
+    --paper-2:#EFF2F5;
+    --ink:#20242B;
+    --ink-soft:#565F6B;
+    --line:#D8DEE6;
+    --line-strong:#B9C2CD;
+    --serif:'Source Serif 4', Georgia, serif;
+    --sans:'IBM Plex Sans', Arial, sans-serif;
+    --mono:'IBM Plex Mono', 'Courier New', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  .container{max-width:1080px;margin:0 auto;padding:0 32px;}
+
+  /* ---------- Grid texture (GIS motif) ---------- */
+  .geo-grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size:48px 48px;
+    pointer-events:none;
+  }
+
+  /* ---------- Header / Nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(247,248,250,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 32px;max-width:1080px;margin:0 auto;
+  }
+  .nav-mark{
+    font-family:var(--mono);font-size:13px;letter-spacing:0.06em;
+    color:var(--navy);font-weight:600;
+  }
+  .nav-links{display:flex;gap:32px;list-style:none;}
+  .nav-links a{
+    font-size:14px;color:var(--ink-soft);font-weight:500;
+    letter-spacing:0.01em;
+    padding:4px 0;border-bottom:1px solid transparent;
+    transition:color .2s, border-color .2s;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--navy);border-color:var(--steel);}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line-strong);border-radius:4px;padding:8px 10px;font-size:14px;font-family:var(--mono);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:var(--navy);color:#EDEFF3;
+    padding:96px 0 80px;
+  }
+  .hero .container{position:relative;z-index:2;}
+  .coord-tag{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:0.08em;
+    color:#9FB6CE;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid rgba(159,182,206,0.35);
+    padding:6px 12px;border-radius:2px;margin-bottom:28px;
+  }
+  .coord-tag::before{content:"⌖";font-size:14px;color:var(--gold);}
+  .hero h1{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(38px, 6vw, 64px);
+    line-height:1.05;letter-spacing:-0.01em;
+    color:#FFFFFF;max-width:14ch;
+  }
+  .hero .role{
+    font-family:var(--mono);font-size:15px;letter-spacing:0.04em;
+    color:var(--gold);margin-top:18px;text-transform:uppercase;
+  }
+  .hero p.lede{
+    margin-top:26px;max-width:640px;font-size:16.5px;color:#C7D0DB;
+  }
+  .hero-actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px;}
+  .btn{
+    font-family:var(--sans);font-weight:600;font-size:14px;
+    padding:12px 22px;border-radius:2px;
+    display:inline-flex;align-items:center;gap:8px;
+    transition:transform .15s, background .15s, color .15s;
+  }
+  .btn-primary{background:var(--gold);color:var(--navy-deep);}
+  .btn-primary:hover{transform:translateY(-1px);background:#C9A360;}
+  .btn-ghost{border:1px solid rgba(237,239,243,0.35);color:#EDEFF3;}
+  .btn-ghost:hover{border-color:#EDEFF3;transform:translateY(-1px);}
+
+  /* ---------- Section scaffolding ---------- */
+  section{padding:76px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .eyebrow{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:0.12em;
+    color:var(--steel);text-transform:uppercase;margin-bottom:10px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::after{content:"";flex:1;height:1px;background:var(--line-strong);}
+  h2.section-title{
+    font-family:var(--serif);font-weight:600;font-size:clamp(26px,3.4vw,34px);
+    color:var(--navy);margin-bottom:36px;letter-spacing:-0.01em;
+  }
+
+  /* ---------- Timeline (Pendidikan) ---------- */
+  .timeline{position:relative;padding-left:28px;border-left:2px solid var(--line-strong);}
+  .t-item{position:relative;padding-bottom:44px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:"";position:absolute;left:-34.5px;top:4px;
+    width:11px;height:11px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--steel);
+  }
+  .t-date{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);letter-spacing:0.03em;}
+  .t-org{font-family:var(--serif);font-size:19px;font-weight:600;color:var(--navy);margin-top:4px;}
+  .t-sub{font-size:14px;color:var(--ink-soft);margin-top:2px;}
+  .t-gpa{
+    display:inline-block;margin-top:10px;font-family:var(--mono);font-size:12.5px;
+    background:var(--paper-2);border:1px solid var(--line);padding:3px 9px;border-radius:2px;color:var(--navy);
+  }
+  .t-list{margin-top:14px;padding-left:18px;}
+  .t-list li{font-size:14.5px;color:var(--ink-soft);margin-bottom:6px;}
+
+  /* ---------- Experience cards ---------- */
+  .exp-card{
+    border:1px solid var(--line);background:#fff;
+    padding:30px 32px;margin-bottom:20px;border-radius:3px;
+    position:relative;
+  }
+  .exp-card:last-child{margin-bottom:0;}
+  .exp-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:10px 20px;}
+  .exp-org{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--navy);}
+  .exp-date{font-family:var(--mono);font-size:12.5px;color:var(--steel);white-space:nowrap;}
+  .exp-role{font-size:14px;font-weight:600;color:var(--gold);margin-top:6px;letter-spacing:0.01em;text-transform:uppercase;}
+  .exp-context{font-size:14px;color:var(--ink-soft);margin-top:8px;font-style:italic;}
+  .exp-list{margin-top:16px;padding-left:18px;}
+  .exp-list li{font-size:14.5px;margin-bottom:8px;color:var(--ink);}
+  .exp-list li::marker{color:var(--steel);}
+
+  /* ---------- Projects grid ---------- */
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .proj-card{
+    border:1px solid var(--line);background:#fff;padding:26px 26px 24px;
+    display:flex;flex-direction:column;gap:12px;border-radius:3px;
+    transition:border-color .2s, box-shadow .2s;
+  }
+  .proj-card:hover{border-color:var(--steel);box-shadow:0 4px 18px rgba(16,36,62,0.06);}
+  .proj-year{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:0.06em;}
+  .proj-title{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--navy);}
+  .proj-desc{font-size:14px;color:var(--ink-soft);}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px;}
+  .tag{
+    font-family:var(--mono);font-size:11.5px;color:var(--navy);
+    background:var(--paper-2);border:1px solid var(--line);
+    padding:3px 8px;border-radius:2px;
+  }
+
+  /* ---------- Org experience ---------- */
+  .org-card{border-left:3px solid var(--gold);padding-left:24px;}
+  .org-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 20px;align-items:baseline;}
+
+  /* ---------- Skills ---------- */
+  .skill-groups{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 40px;}
+  .skill-group h3{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--ink-soft);margin-bottom:12px;font-weight:600;
+  }
+  .skill-chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-size:13.5px;padding:6px 13px;border:1px solid var(--line-strong);
+    border-radius:2px;color:var(--navy);background:#fff;
+  }
+
+  /* ---------- Achievements strip ---------- */
+  .ach-strip{display:flex;flex-wrap:wrap;gap:16px;}
+  .ach-item{
+    flex:1 1 260px;border:1px solid var(--line);background:#fff;padding:22px 24px;border-radius:3px;
+  }
+  .ach-item .label{font-family:var(--mono);font-size:11.5px;color:var(--steel);letter-spacing:0.06em;text-transform:uppercase;}
+  .ach-item .val{font-family:var(--serif);font-size:17px;color:var(--navy);margin-top:6px;font-weight:600;}
+
+  /* ---------- Footer / Contact ---------- */
+  footer{
+    background:var(--navy-deep);color:#C7D0DB;padding:70px 0 40px;position:relative;overflow:hidden;
+  }
+  footer .container{position:relative;z-index:2;}
+  footer h2{
+    font-family:var(--serif);color:#fff;font-size:clamp(26px,3.6vw,36px);font-weight:600;max-width:16ch;
+  }
+  footer p{margin-top:16px;max-width:520px;font-size:15px;color:#9FB0C2;}
+  .contact-grid{
+    margin-top:40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;border-top:1px solid rgba(255,255,255,0.12);padding-top:32px;
+  }
+  .contact-item .label{font-family:var(--mono);font-size:11.5px;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;}
+  .contact-item a, .contact-item span{display:block;margin-top:8px;font-size:14.5px;color:#EDEFF3;word-break:break-word;}
+  .contact-item a:hover{color:var(--gold);}
+  .foot-bottom{margin-top:50px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);
+    font-family:var(--mono);font-size:12px;color:#6E7F92;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .nav-toggle{display:inline-block;}
+    .proj-grid{grid-template-columns:1fr;}
+    .skill-groups{grid-template-columns:1fr;}
+    section{padding:56px 0;}
+    .hero{padding:70px 0 56px;}
+    .container{padding:0 20px;}
+    .nav-inner{padding:16px 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-inner">
+    <span class="nav-mark">M.I.F / PORTOFOLIO</span>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#pendidikan">Pendidikan</a></li>
+        <li><a href="#pengalaman">Pengalaman</a></li>
+        <li><a href="#proyek">Proyek</a></li>
+        <li><a href="#keahlian">Keahlian</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display='flex'">☰</button>
+  </div>
+</header>
+
+<section class="hero" style="border-bottom:none;padding-top:96px;">
+  <div class="geo-grid"></div>
+  <div class="container">
+    <span class="coord-tag">Sidoarjo, East Java · -7.4529°, 112.6844°</span>
+    <h1>Muhammad Ilham Firmansyah</h1>
+    <p class="role">Informatics Engineering Student — Web, IoT &amp; Computer Vision</p>
+    <p class="lede">
+      Mahasiswa Teknik Informatika di Politeknik Negeri Jember dengan rekam jejak membangun sistem GIS pemetaan
+      hidroponik di Pasuruan, integrasi computer vision (PaddleOCR) untuk deteksi label otomatis, dan inovasi
+      Smart Greenhouse melalui Program Kreativitas Mahasiswa (PKM). Fokus pada solusi Python dan Laravel yang
+      efisien dan berdampak nyata.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:muhammadilhamf858@gmail.com">Hubungi Saya</a>
+      <a class="btn btn-ghost" href="https://github.com/Ilhamcom23" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/muhammad-ilham-firmansyah-62153724a" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="pendidikan">
+  <div class="container reveal">
+    <div class="eyebrow">Rekam Jejak Akademik</div>
+    <h2 class="section-title">Jenjang Pendidikan</h2>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-date">Agustus 2022 — Juni 2026</div>
+        <div class="t-org">Politeknik Negeri Jember</div>
+        <div class="t-sub">Bachelor of Informatics Engineering · Jl. Mastrip PO.BOX 164, Sumbersari, Jember</div>
+        <span class="t-gpa">IPK 3.66 / 4.00</span>
+        <ul class="t-list">
+          <li>Participant — Literasi Digital 2023</li>
+          <li>Participant — Coding Camp Exploring Front-End Developer: Wonders and Opportunities 2023</li>
+          <li>Sertifikat — Dicoding Camp Web Component menggunakan Lit 2023</li>
+          <li>Participant — Kompetisi KMIPN VI 2024, Kategori Cipta Inovasi</li>
+          <li>Participant — Kompetisi GEMASTIK 2024, Kategori Perangkat Lunak</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <div class="t-date">Juli 2018 — Agustus 2021</div>
+        <div class="t-org">SMKN 8 Jember</div>
+        <div class="t-sub">Senior High School · Rekayasa Perangkat Lunak · Sidomekar, Semboro, Jember</div>
+        <span class="t-gpa">Nilai 3.80 / 4.00</span>
+        <ul class="t-list">
+          <li>Sertifikat Magang — Kantor Kominfo Jember</li>
+          <li>Sertifikat Of Competency — MASPION IT 2021</li>
+          <li>Sertifikat Of Competency — APTIKNAS 2021</li>
+          <li>Sertifikat Of Competency — AMIGROUP 2021</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pengalaman" style="background:var(--paper-2);">
+  <div class="container reveal">
+    <div class="eyebrow">Kontribusi Profesional</div>
+    <h2 class="section-title">Pengalaman Kerja</h2>
+
+    <div class="exp-card">
+      <div class="exp-head">
+        <span class="exp-org">PT Telkom Indonesia (Tbk)</span>
+        <span class="exp-date">Agustus 2025 — Desember 2025</span>
+      </div>
+      <div class="exp-role">Internship</div>
+      <div class="exp-context">Perusahaan telekomunikasi milik negara terbesar di Indonesia, penyedia infrastruktur dan layanan digital nasional — Jember, East Java</div>
+      <ul class="exp-list">
+        <li>Mengembangkan sistem berbasis AI untuk mendeteksi Optical Distribution Point (ODP) menggunakan teknik object detection.</li>
+        <li>Mengintegrasikan teknologi OCR (Tesseract / PaddleOCR) untuk ekstraksi teks otomatis dari label ODP.</li>
+        <li>Membangun pipeline web end-to-end yang memungkinkan pengguna mengunggah gambar dan menerima hasil deteksi serta ekstraksi label secara real-time.</li>
+        <li>Mendukung inisiatif transformasi digital dengan menerapkan computer vision dan otomasi pada operasi lapangan.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-head">
+        <span class="exp-org">PT Masrur And Son</span>
+        <span class="exp-date">Maret 2024 — Juni 2024</span>
+      </div>
+      <div class="exp-role">Full Stack Web Developer</div>
+      <div class="exp-context">Perusahaan manufaktur swasta yang berfokus pada operasional gudang dan manajemen inventaris — Sidoarjo, East Java</div>
+      <ul class="exp-list">
+        <li>Mengembangkan aplikasi Smart Warehouse (SmartGudang) berbasis web untuk otomasi proses manajemen inventaris.</li>
+        <li>Mengimplementasikan pencatatan stok dan monitoring real-time yang meningkatkan efisiensi manajemen inventaris hingga 30%.</li>
+        <li>Meningkatkan akurasi data inventaris hingga 95%, mengurangi kesalahan manual dan mempercepat pengambilan keputusan.</li>
+        <li>Berkolaborasi dengan tim operasional untuk memastikan kegunaan sistem selaras dengan alur kerja gudang.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-head">
+        <span class="exp-org">Jember Regency Communication and Informatics Office (Diskominfo)</span>
+        <span class="exp-date">Januari 2020 — Juni 2020</span>
+      </div>
+      <div class="exp-role">Full Stack Web Developer</div>
+      <div class="exp-context">Instansi pemerintah yang bertanggung jawab atas infrastruktur TIK, sistem informasi publik, dan layanan digital di Kabupaten Jember</div>
+      <ul class="exp-list">
+        <li>Mengelola dan memperbarui website resmi pemerintah agar kontennya akurat, terkini, dan ramah pengguna.</li>
+        <li>Menerapkan perbaikan antarmuka dan desain responsif, meningkatkan traffic website sekitar 30% dalam enam bulan.</li>
+        <li>Mengorganisir data digital dan dokumentasi kegiatan institusi, meningkatkan efisiensi pengambilan data hingga 40%.</li>
+        <li>Membantu penyelesaian isu teknis terkait jaringan dan sistem perangkat lunak untuk mendukung operasional harian.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="proyek">
+  <div class="container reveal">
+    <div class="eyebrow">Portofolio Teknis</div>
+    <h2 class="section-title">Proyek Unggulan</h2>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <span class="proj-year">2024 — Skripsi</span>
+        <div class="proj-title">HydroMap — WebGIS Pemetaan Hidroponik</div>
+        <p class="proj-desc">Sistem informasi geografis berbasis website untuk memetakan dan menganalisis lokasi
+          usaha hidroponik di Kabupaten Pasuruan, mendukung pengambilan keputusan lokasi berbasis data spasial.</p>
+        <div class="proj-tags">
+          <span class="tag">Laravel</span><span class="tag">Leaflet.js</span><span class="tag">PostGIS</span><span class="tag">QGIS</span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <span class="proj-year">2024</span>
+        <div class="proj-title">Smart Greenhouse IoT System</div>
+        <p class="proj-desc">Sistem greenhouse berbasis IoT yang mengintegrasikan sensor suhu, kelembapan, pH tanah,
+          ketinggian air, dan intensitas cahaya dengan analisis data real-time.</p>
+        <div class="proj-tags">
+          <span class="tag">Arduino</span><span class="tag">C++</span><span class="tag">IoT Sensors</span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <span class="proj-year">2024</span>
+        <div class="proj-title">Smart Warehouse System — Web &amp; Mobile</div>
+        <p class="proj-desc">Sistem manajemen gudang untuk mempercepat pencatatan dan monitoring inventaris
+          melalui aplikasi web dan mobile.</p>
+        <div class="proj-tags">
+          <span class="tag">Laravel</span><span class="tag">REST API</span><span class="tag">Mobile</span>
+        </div>
+      </div>
+      <div class="proj-card">
+        <span class="proj-year">2025</span>
+        <div class="proj-title">School / Company Profile Website</div>
+        <p class="proj-desc">Website company profile responsif berbasis peran dengan manajemen konten admin
+          serta UI/UX yang dioptimalkan.</p>
+        <div class="proj-tags">
+          <span class="tag">Laravel</span><span class="tag">Role-based Access</span><span class="tag">UI/UX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper-2);">
+  <div class="container reveal">
+    <div class="eyebrow">Kontribusi Sosial</div>
+    <h2 class="section-title">Pengalaman Organisasi</h2>
+    <div class="org-card">
+      <div class="org-head">
+        <span class="exp-org" style="font-size:19px;">Sabillal Muttaqin Mosque Youth</span>
+        <span class="exp-date">Maret 2025 — Sekarang</span>
+      </div>
+      <div class="exp-role">General Secretary</div>
+      <div class="exp-context">Organisasi kepemudaan yang berfokus pada inisiatif sosial, keagamaan, dan pemberdayaan pemuda di Kabupaten Jember, menekankan pengembangan karakter melalui program edukasi dan pengabdian masyarakat.</div>
+      <ul class="exp-list">
+        <li>Mengelola surat masuk dan keluar secara sistematis, memastikan distribusi tepat waktu dan pengarsipan dokumen penting.</li>
+        <li>Menjadi penghubung antara anggota Mosque Youth dan pihak eksternal untuk komunikasi yang efektif.</li>
+        <li>Mengoordinasikan jadwal rapat dan acara agar kegiatan organisasi berjalan lancar sesuai rencana.</li>
+        <li>Mengelola basis data anggota, termasuk pembaruan informasi kontak secara berkala.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="keahlian">
+  <div class="container reveal">
+    <div class="eyebrow">Kompetensi Teknis</div>
+    <h2 class="section-title">Keterampilan &amp; Bahasa</h2>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Bahasa Pemrograman &amp; Framework</h3>
+        <div class="skill-chips">
+          <span class="chip">Python</span><span class="chip">PHP</span><span class="chip">Laravel</span>
+          <span class="chip">Flask</span><span class="chip">HTML5</span><span class="chip">CSS3</span>
+          <span class="chip">SQL</span><span class="chip">REST API</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Computer Vision &amp; OCR</h3>
+        <div class="skill-chips">
+          <span class="chip">YOLO</span><span class="chip">CNN</span><span class="chip">PaddleOCR</span>
+          <span class="chip">Tesseract</span><span class="chip">Image Processing</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>IoT &amp; Hardware</h3>
+        <div class="skill-chips">
+          <span class="chip">Arduino</span><span class="chip">C++</span><span class="chip">IoT Systems</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Bahasa</h3>
+        <div class="skill-chips">
+          <span class="chip">Bahasa Indonesia — Native</span><span class="chip">English — Intermediate</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-strip" style="margin-top:40px;">
+      <div class="ach-item">
+        <div class="label">Achievement 2022</div>
+        <div class="val">Halal Certificate Companion — MUI Sidoarjo</div>
+      </div>
+      <div class="ach-item">
+        <div class="label">Kompetisi 2024</div>
+        <div class="val">KMIPN VI — Kategori Cipta Inovasi</div>
+      </div>
+      <div class="ach-item">
+        <div class="label">Kompetisi 2024</div>
+        <div class="val">GEMASTIK — Kategori Perangkat Lunak</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="kontak">
+  <div class="geo-grid" style="opacity:0.5;"></div>
+  <div class="container">
+    <div class="eyebrow" style="color:var(--gold);"><span style="color:var(--gold);">Mari Terhubung</span></div>
+    <h2>Terbuka untuk peluang kerja, kolaborasi proyek, dan diskusi teknis.</h2>
+    <p>Baik untuk peran full stack developer, GIS engineer, maupun computer vision engineer — saya siap
+      mendiskusikan bagaimana saya bisa berkontribusi pada tim Anda.</p>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="label">Telepon</div>
+        <a href="tel:+62085649233721">0856 4923 3721</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Email</div>
+        <a href="mailto:muhammadilhamf858@gmail.com">muhammadilhamf858@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">GitHub</div>
+        <a href="https://github.com/Ilhamcom23" target="_blank" rel="noopener">github.com/Ilhamcom23</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">LinkedIn</div>
+        <a href="https://www.linkedin.com/in/muhammad-ilham-firmansyah-62153724a" target="_blank" rel="noopener">Muhammad Ilham Firmansyah</a>
+      </div>
+      <div class="contact-item">
+        <div class="label">Lokasi</div>
+        <span>Jl. Raya Tulangan No. 27, Tulangan, Sidoarjo, East Java 61273</span>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 Muhammad Ilham Firmansyah</span>
+      <span>Dibangun dengan HTML, CSS &amp; JavaScript</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12});
+    revealEls.forEach(el=>io.observe(el));
+  } else {
+    revealEls.forEach(el=>el.classList.add('visible'));
+  }
+
+  // Mobile nav toggle close on link click
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.addEventListener('click', ()=>{
+      if(window.innerWidth <= 760){ document.querySelector('.nav-links').style.display='none'; }
+    });
+  });
+</script>
+</body>
+</html>
