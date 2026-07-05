@@ -73,6 +73,12 @@
   }
   .nav-links a:hover, .nav-links a:focus-visible{color:var(--navy);border-color:var(--steel);}
   .nav-toggle{display:none;background:none;border:1px solid var(--line-strong);border-radius:4px;padding:8px 10px;font-size:14px;font-family:var(--mono);}
+  .btn-cv-nav{
+    font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:0.03em;
+    color:var(--navy);border:1px solid var(--navy);padding:8px 16px;border-radius:2px;
+    transition:background .2s, color .2s;
+  }
+  .btn-cv-nav:hover{background:var(--navy);color:#fff;}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -255,7 +261,10 @@
         <li><a href="#kontak">Kontak</a></li>
       </ul>
     </nav>
-    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display='flex'">☰</button>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <a class="btn-cv-nav" href="./Muhammad_Ilham_Firmansyah-CV.pdf" download>Unduh CV</a>
+      <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').style.display='flex'">☰</button>
+    </div>
   </div>
 </header>
 
@@ -272,7 +281,7 @@
       efisien dan berdampak nyata.
     </p>
     <div class="hero-actions">
-      <a class="btn btn-primary" href="mailto:muhammadilhamf858@gmail.com">Hubungi Saya</a>
+      <a class="btn btn-primary" href="./Muhammad_Ilham_Firmansyah-CV.pdf" download>Unduh CV (PDF)</a>
       <a class="btn btn-ghost" href="https://github.com/Ilhamcom23" target="_blank" rel="noopener">GitHub ↗</a>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/muhammad-ilham-firmansyah-62153724a" target="_blank" rel="noopener">LinkedIn ↗</a>
     </div>
